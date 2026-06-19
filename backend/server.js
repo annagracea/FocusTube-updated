@@ -8,7 +8,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors({
-  origin:'https://focus-tube-updated.vercel.app/'  // your actual Vercel URL
+  origin:'https://focus-tube-updated.vercel.app'  // your actual Vercel URL
 }));
 app.use(express.json());
 
