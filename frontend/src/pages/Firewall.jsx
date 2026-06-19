@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Shield, Key, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 export default function Firewall() {
     const { user } = useAuth();

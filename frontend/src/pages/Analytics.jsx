@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import { Clock, ShieldCheck, TrendingUp, Calendar, Loader } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 export default function Analytics() {
     const { user } = useAuth();

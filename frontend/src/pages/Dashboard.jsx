@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import VideoCard from '../components/VideoCard';
 import VideoPlayer from '../components/VideoPlayer';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 export default function Dashboard({ watchLater, onToggleWatchLater }) {
     const { user } = useAuth();
