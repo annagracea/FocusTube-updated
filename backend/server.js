@@ -7,7 +7,9 @@ const bcrypt = require('bcrypt');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin:'https://focus-tube-updated.vercel.app'  // your actual Vercel URL
+}));
 app.use(express.json());
 
 const pool = new Pool({

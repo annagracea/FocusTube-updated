@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GraduationCap, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 export default function Auth() {
     const { login } = useAuth();

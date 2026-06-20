@@ -8,7 +8,7 @@ import Analytics from './pages/Analytics';
 import WatchLater from './pages/WatchLater';
 import Profile from './pages/Profile';
 
-const API = 'http://localhost:5000';
+const API = import.meta.env.VITE_API_URL;
 
 function AppShell() {
     const { user, logout } = useAuth();
