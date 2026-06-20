@@ -6,7 +6,7 @@ async function getChronologicalFeed(channelIds) {
 
     let combinedFeed = [];
 
-    for (const channelId of channelIds) {
+    /*for (const channelId of channelIds) {
         try {
             const response = await axios.get('https://www.googleapis.com/youtube/v3/search', {
                 params: {
@@ -62,7 +62,43 @@ async function getChronologicalFeed(channelIds) {
             console.error(`[YouTube] Failed for channel ${channelId}:`, error.response?.data || error.message);
             continue;
         }
+    } */ 
+   
+   for (const channelId of channelIds) {
+    try {
+        // Convert channel ID to uploads playlist ID (just replace UC with UU)
+        const uploadsPlaylistId = 'UU' + channelId.slice(2);
+
+        const response = await axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
+            params: {
+                key: API_KEY,
+                playlistId: uploadsPlaylistId,
+                part: 'snippet',
+                maxResults: 10
+            }
+        });
+
+        if (response.data?.items) {
+            const cleanVideos = response.data.items
+                .map(item => ({
+                    videoId: item.snippet?.resourceId?.videoId || '',
+                    title: item.snippet?.title || 'Untitled',
+                    thumbnail: item.snippet?.thumbnails?.medium?.url || '',
+                    channelTitle: item.snippet?.channelTitle || 'Unknown',
+                    channelId: item.snippet?.channelId || channelId,
+                    publishedAt: item.snippet?.publishedAt || new Date().toISOString(),
+                    durationSeconds: 0,
+                    viewCount: '0'
+                }))
+                .filter(v => v.videoId && !v.title.startsWith('#')); // basic shorts filter
+
+            combinedFeed = combinedFeed.concat(cleanVideos);
+        }
+    } catch (error) {
+        console.error(`[YouTube] Failed for channel ${channelId}:`, error.response?.data || error.message);
+        continue;
     }
+}
 
     return combinedFeed.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
 }
